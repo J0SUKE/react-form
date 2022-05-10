@@ -1,0 +1,188 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf");
+}
+
+$fontDark : rgb(30, 30, 30);
+$lightgray:rgb(227, 227, 227);
+$darkgray : rgb(146, 146, 146);
+$navyBlue : rgb(27, 27, 136);
+$navyBlueLight : rgb(47, 47, 151);
+$red:rgb(248, 38, 38);
+
+*,*::before,*::after
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    font-family: "Montserrat";
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+body{
+    background: -webkit-linear-gradient(to right, #ACB6E5, #74ebd5);
+    background: linear-gradient(to right, #ACB6E5, #74ebd5);
+    min-height: 100vh;
+}
+
+.main-container
+{
+    min-width: 350px;
+    width: 40%;
+    max-width: 450px;
+    background: white;
+    margin: 100px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(142, 142, 142, 0.581);
+
+    form{
+        padding: 3rem 0 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .input-section
+        {
+            width: 75%;
+            .input-notif
+            {
+                font-size: .8rem;
+                color: $red;
+            }
+        }
+
+    }
+}
+
+.form-header
+{
+    height: 100px;
+    width: 100%;
+    background: rgb(248, 248, 248);
+    border-bottom: 1px solid $lightgray;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2{
+        margin: .5rem 0;
+        font-size: 1.2rem;
+        color: $fontDark;
+    }
+}
+
+.form-footer
+{
+    height: 90px;
+    border-top: 1px solid $lightgray;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    justify-content: space-between;
+    button{
+        border: none;
+        outline: none;
+        height: 50px;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        &.nextBtn
+        {
+            color: white;
+            width: 150px;
+            box-shadow: 0 0 5px darkgray;
+
+            background-color: $navyBlue;
+            transition: background-color .3s ;
+            &:hover
+            {
+                background-color: $navyBlueLight;
+            }
+        }
+        &.prevBtn
+        {
+            width: 100px;
+            background: transparent;
+            border: 1px solid $lightgray;
+            color: $navyBlue;
+            overflow: hidden;
+            background: transparent;
+            position: relative;
+            
+            background-color: white;
+            transition: background-color .3s ;
+            &:hover
+            {
+                background-color: $lightgray;
+            }
+        }
+    }
+}
+
+.steper-container
+{
+    height: 3px;
+    border-radius: 1.5px;
+    width: 50%;
+    background: rgb(227, 227, 227);
+    margin: 1rem 0 ;
+    .steper
+    {
+        height: 100%;
+        width: 100%;
+        border-radius: 1.5px;
+        background: navy;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform .4s;
+    }
+}
+
+
+.basic-input
+{
+    border: 1px solid $lightgray;
+    width: 100%;
+    max-width: 350px;
+    height: 65px;
+    border-radius: 5px;
+    overflow: hidden;
+    padding: .3rem .5rem .2rem 1rem;
+    margin: .7rem 0;
+    label{
+        font-size: .6rem;
+        color: $darkgray;
+        height: 20%;
+    }
+    input{
+        display: block;
+        height: 65%;
+        width: 100%;
+        border: none;
+        outline: none;
+        font-size: 1.1rem;
+    }
+    &.selected
+    {
+        border: 1px solid navy;
+    }
+}
+
+.input-field
+{
+    position: relative;
+    svg{
+        height: 25px;
+        width: 25px;
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+}
