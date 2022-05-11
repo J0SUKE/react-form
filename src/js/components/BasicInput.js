@@ -26,24 +26,30 @@ export default class BasicInput extends React.Component
             <div className="input-section">
                 <div 
                     className={selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected"}
-                    onClick={(e)=>{
-                                    this.selectFormField(e,name,selectForm);
-                                }}>
+                    onClick={(e)=>{this.selectFormField(e,name,selectForm);}}
+                >
+                    
                     <label htmlFor={name}>{label}</label>
                     
-                    <input id={name} name={name} placeholder={placeholder}
+                    <input 
+                        id={name} name={name} placeholder={placeholder}
                         type={type=="password" ? (this.state.passwordHidden ? "password" : "text") : type}
                         onSelect={(e)=>{selectForm(e,name)}}
                         spellCheck="false"
                         value={value}
                         onInput={this.handleInput.bind(this)}
-                        />
-                    {type=="password" ? (this.state.passwordHidden ? <Eye onClick={this.togglePassword.bind(this)}/> : 
-                                                                    <EyeSlashed onClick={this.togglePassword.bind(this)}/>
-                                        ) 
-                                        : null }
+                    />
+                    
+                    {type=="password" ? 
+                        (this.state.passwordHidden ? <Eye onClick={this.togglePassword.bind(this)}/> : 
+                                                    <EyeSlashed onClick={this.togglePassword.bind(this)}/>
+                        ) 
+                        : null 
+                    }
                 </div>
+                
                 <p className="input-notif">{errorMessage}</p>
+            
             </div>
         )
     }
@@ -73,20 +79,21 @@ export default class BasicInput extends React.Component
 
     handleInput(e)
     {
-        const{name} = this.props;
+        const{type} = this.props;
         
         let value = e.target.value;
         
-        if (name=="password") {
+        if (type=="password") {
             this.setState({
                 value:value,
                 errorMessage:passwordCheck(value)
             })    
         }
-        else
+        else if(type=="email")
         {
             this.setState({
                 value:value,
+                errorMessage:emailCheck(value)
             })    
         }
 
@@ -128,7 +135,7 @@ function passwordCheck(input) {
     }
     
     input.forEach(element => {
-        if (!containSpecials && numbers.includes(element)) {
+        if (!containSpecials && specials.includes(element)) {
             containSpecials=true;
         }
     });
@@ -139,4 +146,14 @@ function passwordCheck(input) {
 
     return null;
 
+}
+
+function emailCheck(input) {
+
+    if (!input.match(/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)) 
+    {
+        return "invalid email format";    
+    }
+
+    return null;
 }

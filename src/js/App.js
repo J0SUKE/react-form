@@ -21,6 +21,7 @@ export default class App extends React.Component
     }
     render()
     {
+        // trier les formulairese en fonction de leur fonction 
         return (
             <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                 <StateContext.Provider value={this.state}>
@@ -28,7 +29,7 @@ export default class App extends React.Component
                     <form>
                         <BasicInput type="text" name="FirstName" placeholder="Alexandra" label="First Name"/>
                         <BasicInput type="text" name="LastName" placeholder="Pedro" label="Last Name"/>
-                        <BasicInput type="text" name="email" placeholder="example@email.com" label="email"/>
+                        <BasicInput type="email" name="email" placeholder="example@email.com" label="email"/>
                         <BasicInput type="password" name="password" placeholder="password" label="password"/>
                         <BasicInput type="password" name="passwordConfirm" placeholder="password" label="confirm the password"/>
                     </form>
