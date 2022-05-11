@@ -17,7 +17,7 @@ export default class FormHeader extends React.Component
                         style={{transform: `scaleX(${progression/steps})`}}
                     ></div>
                 </div>
-                <h2>{stepsTitles[progression]}</h2>
+                <h2>{stepsTitles[progression-1]}</h2>
             </div>
         )
     }

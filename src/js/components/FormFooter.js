@@ -8,11 +8,27 @@ export default class FormFooter extends React.Component
 
     render()
     {
+        const{setProgression} = this.context;
+        
         return (
             <div className="form-footer">
-                <button className="prevBtn">Previos</button>
-                <button className="nextBtn">Complete this step</button>
+                <button className="prevBtn" onClick={()=>{setProgression("prev")}}>Previos</button>
+                <button className="nextBtn" onClick={()=>{this.submitForm("next")}}>Complete this step</button>
             </div>
         )
+    }
+
+    submitForm(direction)
+    {
+        const{firstStepStates,setProgression} = this.context;
+
+        for(var field in firstStepStates)
+        {
+            if (!firstStepStates[field]) 
+            {
+                return false;    
+            }
+        }
+        setProgression(direction)
     }
 }

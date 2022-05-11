@@ -13,15 +13,25 @@ export default class App extends React.Component
         super(props)
         this.state = {
             steps:3,
-            progression:0,
+            progression:1,
             stepsTitles : ["First Step","Second step","Third step"],
             selectedInput:null,
-            selectForm:this.selectField.bind(this)
+            selectForm:this.selectField.bind(this),
+            passwordValue:"",
+            setPassword:this.setPassword.bind(this),
+            firstStepStates : 
+                            {
+                                FirstName:false,
+                                LastName:false,
+                                email:false,
+                                password:false,
+                                passwordConfirm:false,
+                            },
+            setProgression:this.setProgression.bind(this)
         }
     }
     render()
     {
-        // trier les formulairese en fonction de leur fonction 
         return (
             <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                 <StateContext.Provider value={this.state}>
@@ -38,12 +48,38 @@ export default class App extends React.Component
             </main>)
     }
 
+    // selctionne un champ (lui applique des bordures bleus) au click et a la selection
     selectField(e,name)
     {
         e.stopPropagation();
         this.setState({
             selectedInput:name
         })
+    }
+
+    // met a jour l'etat de passwordValue (pour pouvoir la comparer avec le champ de confirmation du mdp )
+    setPassword(value)
+    {
+        this.setState({
+            passwordValue:value
+        })
+    }
+
+    // fait avancer ou reculer la progression dans le formulaire 
+    setProgression(direction)
+    {
+        if (direction=="next") {
+            this.setState((state)=>({
+                progression:(state.progression==state.steps ? state.progression : state.progression+1)
+            }))    
+        }
+        else
+        {
+            this.setState((state)=>({
+                progression:(state.progression==1 ? state.progression : state.progression-1)
+            }))    
+        }
+        
     }
 
 }
