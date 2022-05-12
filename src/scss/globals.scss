@@ -55,6 +55,11 @@ body{
             }
         }
 
+        &.inactive
+        {
+            display: none;
+        }
+
     }
 }
 
@@ -122,6 +127,11 @@ body{
                 background-color: $lightgray;
             }
         }
+    }
+
+    &.inactive
+    {
+        display: none;
     }
 }
 

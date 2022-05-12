@@ -12,8 +12,6 @@ export default class BasicInput extends React.Component
         super(props);
         this.state = {
             passwordHidden:true,
-            value:"",
-            checked:false
         }
     }
 
@@ -21,7 +19,6 @@ export default class BasicInput extends React.Component
     {
         const{name,placeholder,label,type,fieldStates} = this.props;
         const{selectForm,selectedInput} = this.context;
-        const{errorMessage,value} = this.state;
 
 
         return (
@@ -38,7 +35,7 @@ export default class BasicInput extends React.Component
                         type={type=="password" ? (this.state.passwordHidden ? "password" : "text") : type}
                         onSelect={(e)=>{selectForm(e,name)}}
                         spellCheck="false"
-                        value={value}
+                        value={fieldStates[name].value}
                         onInput={this.handleInput.bind(this)}
                     />
                     
@@ -81,40 +78,25 @@ export default class BasicInput extends React.Component
 
     handleInput(e)
     {
-        const{type,name,setFieldState,fieldStates} = this.props;
+        const{type,name,setFieldState,fieldStates,step} = this.props;
         
         let value = e.target.value;
         let check=null;
 
-        if(name=="FirstName" || name=="LastName")
-        {
-            check = nameCheck(value);
-            
-            this.setState({
-                value:value,
-            })    
-        }    
 
-        else if(type=="email")
-        {
-            check = emailCheck(value);
-            this.setState({
-                value:value,
-            })    
-        }
+        if(name=="FirstName" || name=="LastName") check = nameCheck(value);
+
+        else if(type=="email") check = emailCheck(value);
         
-        else if (name=="password" || name=="passwordConfirm") {
-            
-            
-            
-            check = (name=="password" ? passwordCheck(value) : this.checkPasswordMatch(fieldStates.password.value,value))
-            
-            this.setState({
-                value:value,
-            })    
+        else if (name=="password") check = passwordCheck(value);
+        
+        else if (name=="passwordConfirm") check = this.checkPasswordMatch(fieldStates.password.value,value);
+
+        if (name=="birthPlace") {
+            console.log(value);
         }
 
-        setFieldState(name,(check==null ? true : false),check,value);
+        setFieldState(step,name,(check==null ? true : false),check,value);
     }
 
     checkPasswordMatch(password,confirmation)

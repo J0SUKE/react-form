@@ -2,8 +2,6 @@ import React from "react";
 
 import FormHeader from "./components/FormHeader";
 import { StateContext } from "./components/StateContext.js";
-import BasicInput from "./components/BasicInput";
-import FormFooter from "./components/FormFooter";
 import Form from "./components/Form";
 
 export default class App extends React.Component
@@ -52,21 +50,46 @@ export default class App extends React.Component
                 label:"confirm the password"
             }
         ]
+
+        this.SecondStepField = [
+                {
+                    type:"number",
+                    name:"PhoneNumber",
+                    placeholder:"0766681746",
+                    label:"Phone number"
+                },
+                {
+                    type:"text",
+                    name:"town",
+                    placeholder:"Paris , France",
+                    label:"City"
+                },
+            ]
+        this.ThirdStepField = [
+                {
+                    type:"text",
+                    name:"birthPlace",
+                    placeholder:"paris, France",
+                    label:"Birth place"
+                },
+            ]
+
+        this.AllFields = {
+            firstStepField : this.FirstStepFields,
+            SecondStepField : this.SecondStepField,
+            ThirdStepField : this.ThirdStepField,
+        }
     }
-    
+
     render()
     {
-        let currentStep;
-        
-        if (this.state.progression==1) {
-            currentStep=<Form step={this.state.progression} fields={this.FirstStepFields}/>;
-        }
-        
+    
+
         return (
             <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                 <StateContext.Provider value={this.state}>
                     <FormHeader/>
-                    {currentStep}
+                    <Form fields={this.AllFields}/>
                 </StateContext.Provider>
             </main>)
     }
@@ -97,6 +120,7 @@ export default class App extends React.Component
         }
         
     }
+
 
 }
 

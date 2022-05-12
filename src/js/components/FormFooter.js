@@ -23,29 +23,47 @@ export default class FormFooter extends React.Component
     submitForm(direction)
     {
         const{fieldStates,setFieldState} = this.props;
-        const{setProgression} = this.context;
+        const{setProgression,progression} = this.context;
 
         if (direction=="prev") {
             setProgression(direction);
             return;    
         }
 
+
         let allchecked = true;
 
-        for(let field in fieldStates)
+        let currentStep;
+
+        switch (progression) {
+            case 1:
+                currentStep="firstStepField";      
+                break;
+            case 2:
+                currentStep="SecondStepField";      
+                break;
+            case 2:
+                currentStep="ThirdStepField";      
+                break;
+        }
+
+        for(let field in fieldStates[currentStep])
         {
-            if (!fieldStates[field].checked) 
+            
+            if (!fieldStates[currentStep][field].checked || fieldStates[currentStep][field].value=="") 
             {
                 allchecked=false;
                 
+                console.log(fieldStates[currentStep][field].errorMesg);
+
                 let inputField = document.querySelector(`input[name=\"${field}\"]`).closest(".input-field")
                 inputField.classList.add("error");
-                setFieldState(field,false,
+                setFieldState(progression,field,false,
                         (
-                            fieldStates[field].errorMesg==null ? 
-                                "You have to fill this field" : fieldStates[field].errorMesg
+                            fieldStates[currentStep][field].errorMesg==null ? 
+                                "You have to fill this field" : fieldStates[currentStep][field].errorMesg
                         ),
-                        fieldStates[field].value);
+                        fieldStates[currentStep][field].value);
             }
         }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import BasicInput from "../BasicInput";
 
-export const FormStep1 = (props)=>{
+export const FormStep2 = (props)=>{
     const{setFieldState,fieldStates,fields,step} = props;
 
     let items = [...fields];
