@@ -81,7 +81,7 @@ export default class BasicInput extends React.Component
 
     handleInput(e)
     {
-        const{type,name,setErrorMesg} = this.props;
+        const{type,name,setFieldState,fieldStates} = this.props;
         
         let value = e.target.value;
         let check=null;
@@ -105,16 +105,16 @@ export default class BasicInput extends React.Component
         
         else if (name=="password" || name=="passwordConfirm") {
             
-            check = (name=="password" ? passwordCheck(value) : this.checkPasswordMatch(this.context.passwordValue,value))
+            
+            
+            check = (name=="password" ? passwordCheck(value) : this.checkPasswordMatch(fieldStates.password.value,value))
             
             this.setState({
                 value:value,
             })    
-            
-            if (name=="password") this.context.setPassword(value);
         }
 
-        setErrorMesg(name,(check==null ? true : false),check);
+        setFieldState(name,(check==null ? true : false),check,value);
     }
 
     checkPasswordMatch(password,confirmation)

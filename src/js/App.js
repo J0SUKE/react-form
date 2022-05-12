@@ -4,7 +4,7 @@ import FormHeader from "./components/FormHeader";
 import { StateContext } from "./components/StateContext.js";
 import BasicInput from "./components/BasicInput";
 import FormFooter from "./components/FormFooter";
-import FormStep1 from "./components/FormStep1";
+import Form from "./components/Form";
 
 export default class App extends React.Component
 {
@@ -17,17 +17,49 @@ export default class App extends React.Component
             stepsTitles : ["First Step","Second step","Third step"],
             selectedInput:null,
             selectForm:this.selectField.bind(this),
-            passwordValue:"",
-            setPassword:this.setPassword.bind(this),
             setProgression:this.setProgression.bind(this),
         }
+
+        this.FirstStepFields = [
+            {
+                type:"text",
+                name:"FirstName",
+                placeholder:"Alexandra",
+                label:"First Name"
+            },
+            {
+                type:"text",
+                name:"LastName",
+                placeholder:"Pedro",
+                label:"Last Name"
+            },
+            {
+                type:"email",
+                name:"email",
+                placeholder:"example@email.com",
+                label:"email"   
+            },
+            {
+                type:"password",
+                name:"password",
+                placeholder:"password",
+                label:"password"
+            },
+            {
+                type:"password",
+                name:"passwordConfirm",
+                placeholder:"password",
+                label:"confirm the password"
+            }
+        ]
     }
+    
     render()
     {
         let currentStep;
         
         if (this.state.progression==1) {
-            currentStep=<FormStep1/>;
+            currentStep=<Form step={this.state.progression} fields={this.FirstStepFields}/>;
         }
         
         return (
@@ -48,13 +80,6 @@ export default class App extends React.Component
         })
     }
 
-    // met a jour l'etat de passwordValue (pour pouvoir la comparer avec le champ de confirmation du mdp )
-    setPassword(value)
-    {
-        this.setState({
-            passwordValue:value
-        })
-    }
 
     // fait avancer ou reculer la progression dans le formulaire 
     setProgression(direction)
@@ -73,14 +98,5 @@ export default class App extends React.Component
         
     }
 
-    submitStep()
-    {
-        // il faut que tout les champ d'une step soient en checked
-        // si un champ a mal été rempli il ne sera pas checked ==> le formulaire indiquera le champ a remplir + le msg d'erreur
-        // si le champ n'a pas été rempli , le form indiquera un message : you have to fill this field
-        
-        
-
-    }
 }
 

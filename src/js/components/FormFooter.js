@@ -13,14 +13,16 @@ export default class FormFooter extends React.Component
         return (
             <div className="form-footer">
                 <button className="prevBtn" onClick={(e)=>{e.stopPropagation();setProgression("prev")}}>Previos</button>
-                <button className="nextBtn" onClick={(e)=>{e.stopPropagation();this.submitForm("next")}}>Complete this step</button>
+                <button className="nextBtn" 
+                        onClick={(e)=>{e.stopPropagation();this.submitForm("next")}}>
+                    Complete this step</button>
             </div>
         )
     }
 
     submitForm(direction)
     {
-        const{fieldStates,setErrorMesg} = this.props;
+        const{fieldStates,setFieldState} = this.props;
         const{setProgression} = this.context;
 
         if (direction=="prev") {
@@ -38,11 +40,12 @@ export default class FormFooter extends React.Component
                 
                 let inputField = document.querySelector(`input[name=\"${field}\"]`).closest(".input-field")
                 inputField.classList.add("error");
-                setErrorMesg(field,false,
+                setFieldState(field,false,
                         (
                             fieldStates[field].errorMesg==null ? 
                                 "You have to fill this field" : fieldStates[field].errorMesg
-                                ));
+                        ),
+                        fieldStates[field].value);
             }
         }
 
