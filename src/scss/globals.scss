@@ -4,7 +4,8 @@
 }
 
 $fontDark : rgb(30, 30, 30);
-$lightgray:rgb(227, 227, 227);
+//$lightgray:rgb(227, 227, 227);
+$lightgray:rgb(196, 196, 196);
 $darkgray : rgb(146, 146, 146);
 $navyBlue : rgb(27, 27, 136);
 $navyBlueLight : rgb(47, 47, 151);
@@ -167,10 +168,6 @@ body{
         outline: none;
         font-size: 1.1rem;
     }
-    &.selected
-    {
-        border: 1px solid navy;
-    }
 }
 
 .input-field
@@ -184,5 +181,13 @@ body{
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
+    }
+    &.selected
+    {
+        border: 1px solid navy;
+    }
+    &.error
+    {
+        border: 1px solid $red;
     }
 }

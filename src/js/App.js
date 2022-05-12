@@ -4,7 +4,7 @@ import FormHeader from "./components/FormHeader";
 import { StateContext } from "./components/StateContext.js";
 import BasicInput from "./components/BasicInput";
 import FormFooter from "./components/FormFooter";
-
+import FormStep1 from "./components/FormStep1";
 
 export default class App extends React.Component
 {
@@ -19,31 +19,22 @@ export default class App extends React.Component
             selectForm:this.selectField.bind(this),
             passwordValue:"",
             setPassword:this.setPassword.bind(this),
-            firstStepStates : 
-                            {
-                                FirstName:false,
-                                LastName:false,
-                                email:false,
-                                password:false,
-                                passwordConfirm:false,
-                            },
-            setProgression:this.setProgression.bind(this)
+            setProgression:this.setProgression.bind(this),
         }
     }
     render()
     {
+        let currentStep;
+        
+        if (this.state.progression==1) {
+            currentStep=<FormStep1/>;
+        }
+        
         return (
             <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                 <StateContext.Provider value={this.state}>
                     <FormHeader/>
-                    <form>
-                        <BasicInput type="text" name="FirstName" placeholder="Alexandra" label="First Name"/>
-                        <BasicInput type="text" name="LastName" placeholder="Pedro" label="Last Name"/>
-                        <BasicInput type="email" name="email" placeholder="example@email.com" label="email"/>
-                        <BasicInput type="password" name="password" placeholder="password" label="password"/>
-                        <BasicInput type="password" name="passwordConfirm" placeholder="password" label="confirm the password"/>
-                    </form>
-                    <FormFooter/>
+                    {currentStep}
                 </StateContext.Provider>
             </main>)
     }
@@ -82,4 +73,14 @@ export default class App extends React.Component
         
     }
 
+    submitStep()
+    {
+        // il faut que tout les champ d'une step soient en checked
+        // si un champ a mal été rempli il ne sera pas checked ==> le formulaire indiquera le champ a remplir + le msg d'erreur
+        // si le champ n'a pas été rempli , le form indiquera un message : you have to fill this field
+        
+        
+
+    }
 }
+

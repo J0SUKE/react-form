@@ -47,6 +47,11 @@ export function emailCheck(input) {
 
 export function nameCheck(input) {
     
+    if(input.length==0)
+    {
+        return "name must be atleast 1 caracter";
+    }
+    
     if (input.match(/[0-9]/)) 
     {
         return "name can't contain numbers";    

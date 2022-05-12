@@ -4,14 +4,14 @@ import {emailCheck,passwordCheck,nameCheck} from "../Utils/InputCheck.js";
 
 export default class BasicInput extends React.Component
 {
+    // contexte de App (la variable state de App)
     static contextType = StateContext;
-    
+
     constructor(props)
     {
         super(props);
         this.state = {
             passwordHidden:true,
-            errorMessage:null,
             value:"",
             checked:false
         }
@@ -19,8 +19,8 @@ export default class BasicInput extends React.Component
 
     render()
     {
-        const{name,placeholder,label,type} = this.props;
-        const{selectForm,selectedInput,passwordValue,setPassword} = this.context;
+        const{name,placeholder,label,type,fieldStates} = this.props;
+        const{selectForm,selectedInput} = this.context;
         const{errorMessage,value} = this.state;
 
 
@@ -50,7 +50,7 @@ export default class BasicInput extends React.Component
                     }
                 </div>
                 
-                <p className="input-notif">{errorMessage}</p>
+                <p className="input-notif">{fieldStates[name].errorMesg}</p>
             
             </div>
         )
@@ -81,50 +81,40 @@ export default class BasicInput extends React.Component
 
     handleInput(e)
     {
-        const{type,name} = this.props;
+        const{type,name,setErrorMesg} = this.props;
         
         let value = e.target.value;
+        let check=null;
 
         if(name=="FirstName" || name=="LastName")
         {
-            const check = nameCheck(value);
+            check = nameCheck(value);
             
             this.setState({
                 value:value,
-                errorMessage:nameCheck(value),
-                checked:(check==null ? true : false)
             })    
         }    
 
         else if(type=="email")
         {
-            const check = emailCheck(value);
+            check = emailCheck(value);
             this.setState({
                 value:value,
-                errorMessage:emailCheck(value),
-                checked:(check==null ? true : false)
             })    
         }
         
-        else if (name=="password") {
-            const check = passwordCheck(value);
+        else if (name=="password" || name=="passwordConfirm") {
+            
+            check = (name=="password" ? passwordCheck(value) : this.checkPasswordMatch(this.context.passwordValue,value))
             
             this.setState({
                 value:value,
-                errorMessage:check,
-                checked:(check==null ? true : false)
             })    
-            this.context.setPassword(value);
-        }
-        else if (name=="passwordConfirm") {
-            const check = this.checkPasswordMatch(this.context.passwordValue,value);
             
-            this.setState({
-                value:value,
-                errorMessage:check,
-                checked:(check==null ? true : false)
-            })    
+            if (name=="password") this.context.setPassword(value);
         }
+
+        setErrorMesg(name,(check==null ? true : false),check);
     }
 
     checkPasswordMatch(password,confirmation)

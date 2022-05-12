@@ -12,23 +12,42 @@ export default class FormFooter extends React.Component
         
         return (
             <div className="form-footer">
-                <button className="prevBtn" onClick={()=>{setProgression("prev")}}>Previos</button>
-                <button className="nextBtn" onClick={()=>{this.submitForm("next")}}>Complete this step</button>
+                <button className="prevBtn" onClick={(e)=>{e.stopPropagation();setProgression("prev")}}>Previos</button>
+                <button className="nextBtn" onClick={(e)=>{e.stopPropagation();this.submitForm("next")}}>Complete this step</button>
             </div>
         )
     }
 
     submitForm(direction)
     {
-        const{firstStepStates,setProgression} = this.context;
+        const{fieldStates,setErrorMesg} = this.props;
+        const{setProgression} = this.context;
 
-        for(var field in firstStepStates)
+        if (direction=="prev") {
+            setProgression(direction);
+            return;    
+        }
+
+        let allchecked = true;
+
+        for(let field in fieldStates)
         {
-            if (!firstStepStates[field]) 
+            if (!fieldStates[field].checked) 
             {
-                return false;    
+                allchecked=false;
+                
+                let inputField = document.querySelector(`input[name=\"${field}\"]`).closest(".input-field")
+                inputField.classList.add("error");
+                setErrorMesg(field,false,
+                        (
+                            fieldStates[field].errorMesg==null ? 
+                                "You have to fill this field" : fieldStates[field].errorMesg
+                                ));
             }
         }
-        setProgression(direction)
+
+        if (allchecked) setProgression(direction);
+
+        
     }
 }
