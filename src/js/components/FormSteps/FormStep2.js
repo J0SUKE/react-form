@@ -1,5 +1,7 @@
 import React from "react";
 import BasicInput from "../BasicInput";
+import ListInput from "../ListInput";
+import {getCountries} from "../../getData/getListInputData.js";
 
 export const FormStep2 = (props)=>{
     const{setFieldState,fieldStates,fields,step} = props;
@@ -7,7 +9,7 @@ export const FormStep2 = (props)=>{
     let items = [...fields];
 
     items = items.map(element =>(
-        <BasicInput 
+        <ListInput 
                     setFieldState={setFieldState}
                     fieldStates={fieldStates}
                     name={element.name}
@@ -15,7 +17,8 @@ export const FormStep2 = (props)=>{
                     placeholder={element.placeholder}
                     label={element.label}
                     key={element.name}
-                    step={step}/>                     
+                    step={step}
+                    apiCall={getCountries}/>                     
     ));
 
     return (

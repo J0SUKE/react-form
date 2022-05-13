@@ -92,10 +92,6 @@ export default class BasicInput extends React.Component
         
         else if (name=="passwordConfirm") check = this.checkPasswordMatch(fieldStates.password.value,value);
 
-        if (name=="birthPlace") {
-            console.log(value);
-        }
-
         setFieldState(step,name,(check==null ? true : false),check,value);
     }
 

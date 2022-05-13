@@ -4,6 +4,64 @@ import FormHeader from "./components/FormHeader";
 import { StateContext } from "./components/StateContext.js";
 import Form from "./components/Form";
 
+const FirstStepFields = [
+    {
+        type:"text",
+        name:"FirstName",
+        placeholder:"Alexandra",
+        label:"First Name"
+    },
+    {
+        type:"text",
+        name:"LastName",
+        placeholder:"Pedro",
+        label:"Last Name"
+    },
+    {
+        type:"email",
+        name:"email",
+        placeholder:"example@email.com",
+        label:"email"   
+    },
+    {
+        type:"password",
+        name:"password",
+        placeholder:"password",
+        label:"password"
+    },
+    {
+        type:"password",
+        name:"passwordConfirm",
+        placeholder:"password",
+        label:"confirm the password"
+    }
+]
+
+const SecondStepField = [
+    {
+        type:"text",
+        name:"country",
+        placeholder:"France",
+        label:"Country"
+    },
+    {
+        type:"text",
+        name:"city",
+        placeholder:"Paris",
+        label:"City"
+    },
+]
+
+const ThirdStepField = [
+    {
+        type:"text",
+        name:"birthPlace",
+        placeholder:"paris, France",
+        label:"Birth place"
+    },
+]
+
+
 export default class App extends React.Component
 {
     constructor(props)
@@ -18,66 +76,11 @@ export default class App extends React.Component
             setProgression:this.setProgression.bind(this),
         }
 
-        this.FirstStepFields = [
-            {
-                type:"text",
-                name:"FirstName",
-                placeholder:"Alexandra",
-                label:"First Name"
-            },
-            {
-                type:"text",
-                name:"LastName",
-                placeholder:"Pedro",
-                label:"Last Name"
-            },
-            {
-                type:"email",
-                name:"email",
-                placeholder:"example@email.com",
-                label:"email"   
-            },
-            {
-                type:"password",
-                name:"password",
-                placeholder:"password",
-                label:"password"
-            },
-            {
-                type:"password",
-                name:"passwordConfirm",
-                placeholder:"password",
-                label:"confirm the password"
-            }
-        ]
-
-        this.SecondStepField = [
-                {
-                    type:"number",
-                    name:"PhoneNumber",
-                    placeholder:"0766681746",
-                    label:"Phone number"
-                },
-                {
-                    type:"text",
-                    name:"town",
-                    placeholder:"Paris , France",
-                    label:"City"
-                },
-            ]
-        this.ThirdStepField = [
-                {
-                    type:"text",
-                    name:"birthPlace",
-                    placeholder:"paris, France",
-                    label:"Birth place"
-                },
-            ]
 
         this.AllFields = {
-            firstStepField : this.FirstStepFields,
-            SecondStepField : this.SecondStepField,
-            ThirdStepField : this.ThirdStepField,
+            firstStepField : FirstStepFields,
+            SecondStepField : SecondStepField,
+            ThirdStepField : ThirdStepField,
         }
     }
 

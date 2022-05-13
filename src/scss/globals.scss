@@ -6,7 +6,9 @@
 $fontDark : rgb(30, 30, 30);
 //$lightgray:rgb(227, 227, 227);
 $lightgray:rgb(196, 196, 196);
+$veryLightgray:rgb(232, 232, 232);
 $darkgray : rgb(146, 146, 146);
+$mediumDarkgray : rgb(108, 108, 108);
 $navyBlue : rgb(27, 27, 136);
 $navyBlueLight : rgb(47, 47, 151);
 $red:rgb(248, 38, 38);
@@ -162,11 +164,10 @@ body{
     max-width: 350px;
     height: 65px;
     border-radius: 5px;
-    overflow: hidden;
     padding: .3rem .5rem .2rem 1rem;
     margin: .7rem 0;
     label{
-        font-size: .6rem;
+        font-size: .8rem;
         color: $darkgray;
         height: 20%;
     }
@@ -183,7 +184,7 @@ body{
 .input-field
 {
     position: relative;
-    svg{
+    &>svg{
         height: 25px;
         width: 25px;
         position: absolute;
@@ -199,5 +200,57 @@ body{
     &.error
     {
         border: 1px solid $red;
+    }
+    menu
+    {
+        position: absolute;
+        top: 110%;
+        width: 100%;
+        left: 0;
+        background:white;
+        z-index: 99;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(76, 75, 75, 0.676);
+
+        ul{
+            width: 95%;
+            margin: 1rem auto;
+            li{
+                height: 2rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: .5rem;
+                border-radius: .5rem;
+                color: $mediumDarkgray;
+                font-size: .9rem;
+                font-weight: 400;
+                &:hover
+                {
+                    background: $veryLightgray;
+                    color: $fontDark;
+                    svg{
+                        path{
+                            fill: $fontDark;
+                        }
+                    }
+                }
+                svg{
+                    height: 1rem;
+                    width: 1rem;
+                    display: block;
+                }
+                p{
+                    margin-left: .5rem;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+            .noResults
+            {
+                text-align: center;
+                color: $fontDark;
+            }
+        }
     }
 }
