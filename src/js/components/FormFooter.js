@@ -8,14 +8,15 @@ export default class FormFooter extends React.Component
 
     render()
     {
-        const{setProgression} = this.context;
+        const{setProgression,steps,progression} = this.context;
         
         return (
             <div className="form-footer">
                 <button className="prevBtn" onClick={(e)=>{e.stopPropagation();setProgression("prev")}}>Previos</button>
                 <button className="nextBtn" 
-                        onClick={(e)=>{e.stopPropagation();this.submitForm("next")}}>
-                    Complete this step</button>
+                        onClick={(e)=>{e.stopPropagation();this.submitForm("next")}}
+                        >
+                    {progression==steps ? "Submit" : "Complete this step"}</button>
             </div>
         )
     }

@@ -36,7 +36,7 @@ export const FormStep2 = (props)=>{
                     enabled={fieldStates.country.checked}
                     apiCall={getDialCodes}
                     country={fieldStates.country.value}
-                    />     
+                />     
             )
         }
 

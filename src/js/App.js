@@ -92,7 +92,7 @@ export default class App extends React.Component
                             <FormHeader/>
                             <Form fields={this.AllFields}/>
                         </main>        
-                        : <EndScreen/>
+                        : <EndScreen setProgression={this.setProgression.bind(this)}/>
                     }
                 </StateContext.Provider>
             </>
@@ -129,12 +129,15 @@ export default class App extends React.Component
 
 }
 
-function EndScreen() {
+function EndScreen(props) 
+{
+    const{setProgression} = props;
+    
     return (
         <div className="endScreen">
             <h1>You have completed your subscribtion</h1>
             <div>
-                <button className="prevBtn">Go back</button>
+                <button onClick={()=>{setProgression("prev")}} className="prevBtn">Go back</button>
                 <button className="nextBtn">Close</button>
             </div>
         </div>

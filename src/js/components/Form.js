@@ -27,7 +27,13 @@ export default class Form extends React.Component
             fieldsObject[step] = {...stepObj}
         }
 
-    
+        /*
+            "fieldStates": {
+                    "firstStepField": "{FirstName: {…}, LastName: {…}, email: {…}, passwor…}",
+                    "SecondStepField": "{city: {…}, country: {…}, phonenumber: {…}}"
+                }
+        */
+
         this.state = {
             fieldStates : {...fieldsObject},
         }
@@ -37,13 +43,13 @@ export default class Form extends React.Component
     
     render()
     {
-        const{fields,step} = this.props;
+        const{fields} = this.props;
         const{progression} = this.context;
         let form;
         
         if (progression==1) {
             form = <FormStep1 
-                step={1}
+                step={progression}
                 setFieldState={this.setFieldState.bind(this)}
                 fieldStates={this.state.fieldStates.firstStepField}
                 fields={fields.firstStepField}
@@ -54,7 +60,7 @@ export default class Form extends React.Component
         else if(progression==2)
         {
             form = <FormStep2
-                    step={2}
+                    step={progression}
                     setFieldState={this.setFieldState.bind(this)}
                     fieldStates={this.state.fieldStates.SecondStepField}
                     fields={fields.SecondStepField}
@@ -71,9 +77,16 @@ export default class Form extends React.Component
 
     }
 
+    //pour chaque input field cette fonction gere toutes les infos (value,checked,errorMesg)
+
     setFieldState(step,name,chechState,mesg,value)
     {
-        //let stepFieldName = (step==1 ? "firstStepField":"SecondStepField" );
+        //step (int) :  l'étape du formulaire
+        //name (string) : la valeur de l'attribut name du input
+        //chechState (boolean) : booléen renvoyé par la fonction de check du input
+        //mesg (string) : valeur du message d'erreur (null si il n'y en a pas)
+        //value (string) : valeur du input
+        
         let stepFieldName;
 
         switch (step) {

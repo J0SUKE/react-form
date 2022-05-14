@@ -23,6 +23,7 @@ export default class BasicInput extends React.Component
         const{name,placeholder,label,type,fieldStates,enabled} = this.props;
         const{selectForm,selectedInput} = this.context;
 
+
         if (name=="phonenumber" && fieldStates.country.checked) {
             const{apiCall,country} = this.props;
             apiCall(country).then(code=>{
@@ -30,6 +31,7 @@ export default class BasicInput extends React.Component
             })
         }
 
+        // la classe de la div qui contient le input , label , et error Message
         let fieldClass;
         fieldClass = (selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected")
         fieldClass=fieldClass+(enabled? "" : " disabled");
@@ -68,6 +70,9 @@ export default class BasicInput extends React.Component
     }
 
     selectFormField(e,name,selectForm) {
+        const{enabled} = this.props;
+        if (!enabled) return;
+        
         let target;
         if (e.target.className=="input-field" ) {
             target=e.target
@@ -112,8 +117,7 @@ export default class BasicInput extends React.Component
             if (value=="") {
                 console.log(value);
                 value=`${this.dialCode} ${value}`;    
-            }
-            
+            }  
         } 
 
         setFieldState(step,name,(check==null ? true : false),check,value);    
@@ -131,7 +135,6 @@ export default class BasicInput extends React.Component
 /**
  * Other Components
  */
-
 
 function Eye({onClick}) {
     return (<svg onClick={onClick} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#929292" d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"/></svg>);
