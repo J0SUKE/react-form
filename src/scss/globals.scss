@@ -4,7 +4,7 @@
 }
 
 $fontDark : rgb(30, 30, 30);
-//$lightgray:rgb(227, 227, 227);
+
 $lightgray:rgb(196, 196, 196);
 $veryLightgray:rgb(232, 232, 232);
 $darkgray : rgb(146, 146, 146);
@@ -280,4 +280,82 @@ body{
     input:disabled {
         background: transparent;
       }
+}
+
+.endScreen
+{
+    min-width: 350px;
+    width: 40%;
+    max-width: 450px;
+    background: white;
+    margin:auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(142, 142, 142, 0.581);
+
+    h1{
+        color: $fontDark;
+        font-size: 1.1rem;
+        padding: 3rem 0;
+        text-align: center;
+    }
+    div{
+        display: flex;
+        justify-content: space-between;
+        padding: 0rem 2rem 1rem 2rem;
+        button{
+            border: none;
+            outline: none;
+            height: 50px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            &.nextBtn
+            {
+                color: white;
+                width: 150px;
+                box-shadow: 0 0 5px darkgray;
+    
+                background-color: $navyBlue;
+                transition: background-color .3s ;
+                &:hover
+                {
+                    background-color: $navyBlueLight;
+                }
+            }
+            &.prevBtn
+            {
+                width: 100px;
+                background: transparent;
+                border: 1px solid $lightgray;
+                color: $navyBlue;
+                overflow: hidden;
+                background: transparent;
+                position: relative;
+                
+                background-color: white;
+                transition: background-color .3s ;
+                &:hover
+                {
+                    background-color: $lightgray;
+                }
+            }
+        }
+    }
+
+    transform: scale(0) translate(-50%,-50%);
+    animation: animateEndScreen .7s forwards;
+    transform-origin: center;
+    opacity: 0;
+    @keyframes animateEndScreen {
+        from{
+            opacity: 0;
+            transform: translate(-50%,-60%);
+        }to{
+            opacity: 1;
+            transform:translate(-50%,-50%);
+        }
+    }
 }

@@ -85,16 +85,18 @@ export default class App extends React.Component
     {
     
         return (
-            <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
+            <>
                 <StateContext.Provider value={this.state}>
                     {this.state.progression<=this.state.steps ? 
-                        <>
+                        <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                             <FormHeader/>
                             <Form fields={this.AllFields}/>
-                        </>
-                    : null}
+                        </main>        
+                        : <EndScreen/>
+                    }
                 </StateContext.Provider>
-            </main>)
+            </>
+            )
     }
 
     // selctionne un champ (lui applique des bordures bleus) au click et a la selection
@@ -127,3 +129,14 @@ export default class App extends React.Component
 
 }
 
+function EndScreen() {
+    return (
+        <div className="endScreen">
+            <h1>You have completed your subscribtion</h1>
+            <div>
+                <button className="prevBtn">Go back</button>
+                <button className="nextBtn">Close</button>
+            </div>
+        </div>
+    )
+}
