@@ -63,3 +63,21 @@ export function nameCheck(input) {
     }
     return null;      
 }
+
+export function phoneCheck(input,countryCode) {
+    // le format doit etre : +countryCode 0766681746
+    // ou : +countryCode 07 66 68 17 46
+    countryCode="\\"+countryCode;
+    let regex = new RegExp(`^${countryCode}\ ([0-9]{2}|[0-9]{2}\ ){5}$`, 'g')
+
+    let match = input.match(regex);
+    if (match) {
+        return null; // renvoie null si la saisie est valide 
+    }
+    if (("\\"+input.split(" ")[0])!=countryCode) {
+        return "wrong coutry code";    
+    }
+    
+    return "invalid phone number";
+
+}

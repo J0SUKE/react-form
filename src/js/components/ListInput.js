@@ -13,19 +13,31 @@ export default class ListInput extends React.Component
         this.state = {
             propositions:[],
         }
-        this.getData();
+        
+        if (props.name=="country") {
+            this.getData();   
+        }
         this.data;
     }
 
     render()
     {
-        const{name,placeholder,label,type,fieldStates} = this.props;
+        const{name,placeholder,label,type,fieldStates,enabled} = this.props;
         const{selectForm,selectedInput} = this.context;
+
+        let fieldClass;
+        fieldClass = (selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected")
+        fieldClass=fieldClass+(enabled? "" : " disabled");
+
+        if (name=="city" && fieldStates.country.checked) 
+        {
+            this.getData();    
+        }
 
         return(
             <div className="input-section">
                 <div 
-                    className={selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected"}
+                    className={fieldClass}
                     onClick={(e)=>{this.selectFormField(e,name,selectForm);}}
                 >
                     <label htmlFor={name}>{label}</label>   
@@ -35,13 +47,16 @@ export default class ListInput extends React.Component
                         onSelect={(e)=>{selectForm(e,name)}}
                         onInput={this.handleInput.bind(this)}
                         value={fieldStates[name].value}
+                        disabled={!enabled? true: false }
                     />
                     <ArrowDown/>
                     {selectedInput==name ? <Menu 
-                                                apiCall={GetCountries} 
                                                 proposition={this.state.propositions}
                                                 value={fieldStates[name].value}
-                                                input={fieldStates[name].value}/> : null}
+                                                input={fieldStates[name].value}
+                                                setValue={this.setValue.bind(this)}
+                                                inputState={fieldStates[name].checked}
+                                                /> : null}
                 </div>
 
                 <p className="input-notif">{fieldStates[name].errorMesg}</p>
@@ -51,6 +66,9 @@ export default class ListInput extends React.Component
     }
 
     selectFormField(e,name,selectForm) {
+        const{enabled} = this.props;
+        if (!enabled) return;
+        
         let target;
         if (e.target.className=="input-field" ) {
             target=e.target
@@ -70,24 +88,57 @@ export default class ListInput extends React.Component
         const{name,setFieldState,fieldStates,step} = this.props;
         
         let value = e.target.value;
-        let check=null;
+        let check="you have to select an option";
+
+
+        let props = [...FilterData(value,this.data,4)];
+        props.forEach(element => {
+            if (element==value) {
+                check=null;
+            }
+        });
 
         this.setState({
-            propositions:[...FilterData(value,this.data,4)]
+            propositions:props
         })
-
-        // le setField doit se faire uniquement si l'utilisateur choisit une proposition du menu
+    
         setFieldState(step,name,(check==null ? true : false),check,value);
+        
+        if (name=="country" && !fieldStates.country.checked) {
+            setFieldState(step,"city",false,null,"");
+            setFieldState(step,"phonenumber",false,null,"");
+        }
+
     }
 
     getData()
     {
-        const{apiCall} = this.props;
+        const{apiCall,name,fieldStates} = this.props;
 
-        apiCall().then((data)=>{
-            this.data = data;
-            return this.data
-        })
+        if (name=="country") {
+            apiCall().then((data)=>{
+                this.data = data;
+                return this.data
+            })    
+        }
+
+        if (name=="city") {
+            apiCall(fieldStates.country.value).then((data)=>{
+                this.data = data;
+                return this.data
+            })    
+        }
+        
+    }
+
+    setValue(value)
+    {
+        // si on appelle cette fonction , c'est que le use a cliqué sur une option disponnible 
+        // donc le check est true
+        
+        const{name,setFieldState,step} = this.props;
+        
+        setFieldState(step,name,true,null,value);
     }
 
 
@@ -120,7 +171,7 @@ class Menu extends React.Component
     
     render()
     {
-        const{input,proposition} = this.props;
+        const{input,proposition,inputState} = this.props;
 
         let items;
         if (proposition.length==0) {
@@ -129,7 +180,10 @@ class Menu extends React.Component
         else
         {
             items = proposition.map((element)=>(
-                <li key={element}><GPSicon/> <p>{element}</p></li>
+                <li 
+                    key={element}
+                    onClick={()=>{this.setVal(element)}}
+                    ><GPSicon/> <p>{element}</p></li>
             ))
         }
         
@@ -141,8 +195,14 @@ class Menu extends React.Component
                         </menu>)
 
         return (
-            (input=="" ? null : menuContent) 
+            (input=="" ? null : (inputState? null : menuContent)) 
         )
+    }
+
+    setVal(element)
+    {
+        const{setValue} = this.props;
+        setValue(element);
     }
 }
 

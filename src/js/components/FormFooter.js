@@ -38,14 +38,11 @@ export default class FormFooter extends React.Component
         //!!!!!ne pas oublier de rétablir l'ordre correct des steps (j'ai inversé le 1 et le 2 pour aller + vite)
 
         switch (progression) {
-            case 2:
+            case 1:
                 currentStep="firstStepField";      
                 break;
-            case 1:
+            case 2:
                 currentStep="SecondStepField";      
-                break;
-            case 3:
-                currentStep="ThirdStepField";      
                 break;
         }
 

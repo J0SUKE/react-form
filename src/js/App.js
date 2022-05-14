@@ -50,16 +50,14 @@ const SecondStepField = [
         placeholder:"Paris",
         label:"City"
     },
-]
-
-const ThirdStepField = [
     {
         type:"text",
-        name:"birthPlace",
-        placeholder:"paris, France",
-        label:"Birth place"
+        name:"phonenumber",
+        placeholder:"+01 02 03 04 05",
+        label:"Phone number"
     },
 ]
+
 
 
 export default class App extends React.Component
@@ -68,9 +66,9 @@ export default class App extends React.Component
     {
         super(props)
         this.state = {
-            steps:3,
+            steps:2,
             progression:1,
-            stepsTitles : ["First Step","Second step","Third step"],
+            stepsTitles : ["First Step","Second step"],
             selectedInput:null,
             selectForm:this.selectField.bind(this),
             setProgression:this.setProgression.bind(this),
@@ -80,7 +78,6 @@ export default class App extends React.Component
         this.AllFields = {
             firstStepField : FirstStepFields,
             SecondStepField : SecondStepField,
-            ThirdStepField : ThirdStepField,
         }
     }
 

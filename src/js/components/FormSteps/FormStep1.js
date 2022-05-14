@@ -15,7 +15,9 @@ export const FormStep1 = (props)=>{
                     placeholder={element.placeholder}
                     label={element.label}
                     key={element.name}
-                    step={step}/>                     
+                    step={step}
+                    enabled={true}
+                    />                     
     ));
 
     return (

@@ -44,7 +44,7 @@ export default class Form extends React.Component
         //!!!! j'ai inversé les steps , l'ordre correct est dans Sublime TExt
 
         
-        if (progression==2) {
+        if (progression==1) {
             form = <FormStep1 
                 step={1}
                 setFieldState={this.setFieldState.bind(this)}
@@ -54,7 +54,7 @@ export default class Form extends React.Component
         }
 
         
-        else if(progression==1)
+        else if(progression==2)
         {
             form = <FormStep2
                     step={2}
@@ -64,15 +64,6 @@ export default class Form extends React.Component
             />
         }
 
-        else if(progression==3)
-        {
-            form = <FormStep2
-                    step={3}
-                    setFieldState={this.setFieldState.bind(this)}
-                    fieldStates={this.state.fieldStates.ThirdStepField}
-                    fields={fields.ThirdStepField}
-            />
-        }
         
         return (<>
             {form}

@@ -1,6 +1,8 @@
 import React from "react";
 import { StateContext } from "./StateContext";
 import {emailCheck,passwordCheck,nameCheck} from "../Utils/InputCheck.js";
+import {phoneCheck} from "../Utils/InputCheck.js";
+
 
 export default class BasicInput extends React.Component
 {
@@ -13,18 +15,29 @@ export default class BasicInput extends React.Component
         this.state = {
             passwordHidden:true,
         }
+        this.dialCode;//on s'en sert uniquement pour le numero de telephone
     }
 
     render()
     {
-        const{name,placeholder,label,type,fieldStates} = this.props;
+        const{name,placeholder,label,type,fieldStates,enabled} = this.props;
         const{selectForm,selectedInput} = this.context;
 
+        if (name=="phonenumber" && fieldStates.country.checked) {
+            const{apiCall,country} = this.props;
+            apiCall(country).then(code=>{
+                this.dialCode=code;
+            })
+        }
+
+        let fieldClass;
+        fieldClass = (selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected")
+        fieldClass=fieldClass+(enabled? "" : " disabled");
 
         return (
             <div className="input-section">
                 <div 
-                    className={selectedInput!==name ? "input-field basic-input" : "input-field basic-input selected"}
+                    className={fieldClass}
                     onClick={(e)=>{this.selectFormField(e,name,selectForm);}}
                 >
                     
@@ -32,6 +45,7 @@ export default class BasicInput extends React.Component
                     
                     <input 
                         id={name} name={name} placeholder={placeholder}
+                        disabled={enabled? false : true}
                         type={type=="password" ? (this.state.passwordHidden ? "password" : "text") : type}
                         onSelect={(e)=>{selectForm(e,name)}}
                         spellCheck="false"
@@ -92,7 +106,9 @@ export default class BasicInput extends React.Component
         
         else if (name=="passwordConfirm") check = this.checkPasswordMatch(fieldStates.password.value,value);
 
-        setFieldState(step,name,(check==null ? true : false),check,value);
+        else if (name=="phonenumber") check = phoneCheck(value,this.dialCode);
+
+        setFieldState(step,name,(check==null ? true : false),check,value);    
     }
 
     checkPasswordMatch(password,confirmation)
