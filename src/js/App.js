@@ -84,12 +84,15 @@ export default class App extends React.Component
     render()
     {
     
-
         return (
             <main className="main-container" onClick={(e)=>{e.stopPropagation();this.selectField(e,null)}}>
                 <StateContext.Provider value={this.state}>
-                    <FormHeader/>
-                    <Form fields={this.AllFields}/>
+                    {this.state.progression<=this.state.steps ? 
+                        <>
+                            <FormHeader/>
+                            <Form fields={this.AllFields}/>
+                        </>
+                    : null}
                 </StateContext.Provider>
             </main>)
     }
@@ -109,7 +112,7 @@ export default class App extends React.Component
     {
         if (direction=="next") {
             this.setState((state)=>({
-                progression:(state.progression==state.steps ? state.progression : state.progression+1)
+                progression:(state.progression==(state.steps+1) ? state.progression : state.progression+1)
             }))    
         }
         else

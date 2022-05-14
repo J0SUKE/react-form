@@ -40,9 +40,6 @@ export default class Form extends React.Component
         const{fields,step} = this.props;
         const{progression} = this.context;
         let form;
-
-        //!!!! j'ai inversé les steps , l'ordre correct est dans Sublime TExt
-
         
         if (progression==1) {
             form = <FormStep1 
@@ -63,7 +60,6 @@ export default class Form extends React.Component
                     fields={fields.SecondStepField}
             />
         }
-
         
         return (<>
             {form}
@@ -86,9 +82,6 @@ export default class Form extends React.Component
                 break;
             case 2:
                 stepFieldName="SecondStepField";
-                break;
-            case 3:
-                stepFieldName="ThirdStepField";
                 break;
         }
 

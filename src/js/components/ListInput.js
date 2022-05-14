@@ -1,5 +1,6 @@
 import React from "react";
 import { StateContext } from "./StateContext";
+import {getDialCodes} from "../getData/getListInputData.js";
 
 export default class ListInput extends React.Component
 {
@@ -105,8 +106,7 @@ export default class ListInput extends React.Component
         setFieldState(step,name,(check==null ? true : false),check,value);
         
         if (name=="country" && !fieldStates.country.checked) {
-            setFieldState(step,"city",false,null,"");
-            setFieldState(step,"phonenumber",false,null,"");
+            setFieldState(step,"city",false,null,"");  
         }
 
     }
@@ -136,8 +136,16 @@ export default class ListInput extends React.Component
         // si on appelle cette fonction , c'est que le use a cliqué sur une option disponnible 
         // donc le check est true
         
-        const{name,setFieldState,step} = this.props;
+        const{name,setFieldState,fieldStates,step} = this.props;
         
+        if (name=="country") {
+            getDialCodes(value)
+                .then((code)=>{
+                    console.log(code);
+                    setFieldState(step,"phonenumber",false,null,`${code} `);    
+                })
+        }
+
         setFieldState(step,name,true,null,value);
     }
 

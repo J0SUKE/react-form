@@ -106,7 +106,15 @@ export default class BasicInput extends React.Component
         
         else if (name=="passwordConfirm") check = this.checkPasswordMatch(fieldStates.password.value,value);
 
-        else if (name=="phonenumber") check = phoneCheck(value,this.dialCode);
+        else if (name=="phonenumber")
+        {
+            check = phoneCheck(value,this.dialCode);
+            if (value=="") {
+                console.log(value);
+                value=`${this.dialCode} ${value}`;    
+            }
+            
+        } 
 
         setFieldState(step,name,(check==null ? true : false),check,value);    
     }
